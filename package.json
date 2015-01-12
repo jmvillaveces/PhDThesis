@@ -18,5 +18,8 @@
   "homepage": "https://github.com/jmvillaveces/PhDThesis",
   "dependencies": {
     "reveal-md": "0.0.13"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5"
   }
 }
