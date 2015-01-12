@@ -1,0 +1,22 @@
+{
+  "name": "PhDThesis",
+  "version": "1.0.0",
+  "description": "Dissertation slides!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jmvillaveces/PhDThesis.git"
+  },
+  "author": "jVillaveces",
+  "license": "GNU v2",
+  "bugs": {
+    "url": "https://github.com/jmvillaveces/PhDThesis/issues"
+  },
+  "homepage": "https://github.com/jmvillaveces/PhDThesis",
+  "dependencies": {
+    "reveal-md": "0.0.13"
+  }
+}
