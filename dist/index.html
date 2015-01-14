@@ -17,18 +17,32 @@
 		<!-- Wrap all slides in a single "slides" class -->
 		<div class="slides">
  
-            <section>
-                <section>Vertical Slide 1</section>
-                <section>Vertical Slide 2</section>
-            </section>
+            
             
 			<!-- ALL SLIDES GO HERE -->
 			<!-- Each section element contains an individual slide -->
 			<section>
-				<h1>About My Product</h1>
-				<p>My product discussed here</p>		
+				<h2>Integration and visualization of protein interactions</h2>
+				<p>
+				    <small>José M. Villaveces, Habermann Lab</small>
+				</p>		
 			</section>
+            
+            <section>
+                <h3>Agenda</h3>
+                <p>
+                    <ul>
+                        <li> hola </li>
+                    </ul>
+                </p>
+            </section>
  
+            <section>
+                <div style="position: fixed;top: 50%;left: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);">
+                    <svg id="db"></svg>
+                </div>
+            </section>
+        
 			<section id="show-a-link">
 				<h1>Show a live link</h1>
 				<p>Slide 2 discussed here</p>
@@ -45,10 +59,42 @@
 	</div>
 	<script src="lib/js/head.min.js"></script>
 	<script src="js/reveal.js"></script>
+    <script src="js/slides.js"></script>
  
 	<script>
 		// Required, even if empty.
 		Reveal.initialize({
+            // Display controls in the bottom right corner
+            controls: true,
+
+            // Display a presentation progress bar
+            progress: true,
+
+            // Display the page number of the current slide
+            slideNumber: false,
+
+            // Push each slide change to the browser history
+            history: false,
+
+            // Enable keyboard shortcuts for navigation
+            keyboard: true,
+
+            // Enable the slide overview mode
+            overview: true,
+
+            // Vertical centering of slides
+            center: true,
+
+            // Enables touch navigation on devices with touch input
+            touch: true,
+            
+            slideNumber: true
+            
+            // Parallax background image
+            //parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+
+            // Parallax background size
+            //parallaxBackgroundSize: '2100px 900px' // CSS syntax, e.g. "2100px 900px"
 		});
 	</script>
 </body>
