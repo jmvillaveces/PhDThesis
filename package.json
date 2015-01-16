@@ -23,6 +23,7 @@
     "grunt-contrib-uglify": "^0.7.0"
   },
   "dependencies": {
-    "d3": "^3.5.3"
+    "d3": "^3.5.3",
+    "numeral": "^1.5.3"
   }
 }
