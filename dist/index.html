@@ -2,9 +2,10 @@
 <html lang="en">	
 <head>
 	<meta charset="utf-8">
-	<title>Reveal.js 3 Slide Demo</title>
+	<title>JMV's PhD Thesis</title>
 	<link rel="stylesheet" href="css/reveal.css">
-	<link rel="stylesheet" href="css/theme/cool.css" id="theme">	
+	<link rel="stylesheet" href="css/theme/cool.css" id="theme">
+    <link rel="stylesheet" href="css/bootstrap.css" id="bootstrap">
 	<!--Add support for earlier versions of Internet Explorer -->
 	<!--[if lt IE 9]>
 	<script src="lib/js/html5shiv.js"></script>
@@ -17,30 +18,31 @@
 		<!-- Wrap all slides in a single "slides" class -->
 		<div class="slides">
             
-            <section data-state="viz">
-                <div style="position: fixed;top: 50%;left: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);">
-                    <svg id="viz"></svg>
-                </div>
-            </section>
-            
-			<!-- ALL SLIDES GO HERE -->
-			<!-- Each section element contains an individual slide -->
-			<section>
+            <section data-background="img/netw_disp.png">
 				<h2>Integration and visualization of protein interactions</h2>
 				<p>
 				    <small><span class="blue">José M. Villaveces</span> / <span class="blue">Habermann Lab</span></small>
-				</p>		
+                    <br>
+                    <small id="date"></small>
+				</p>
+                <p style="font-size:14px"><a href="https://www.flickr.com/photos/seeminglee/" target="_blank">Image by See-ming Lee Flickr</a></p>
 			</section>
             
             <section>
                 <h3>Agenda</h3>
-                <p>
-                    <ul>
-                        <li> hola </li>
-                    </ul>
-                </p>
+                <dl>
+                    <dt>Introduction</dt>
+                    <dt>Merging Molecular Interactions</dt>
+                    <dd>PSICQUIC</dd>
+                    <dt>Scoring Molecular Interactions</dt>
+                    <dd>MIscore</dd>
+                    <dd>Scores Comparison</dd>
+                    <dt>Visualization</dt>
+                    <dd>BioJS</dd>
+                    <dd>Live demo</dd>
+                </dl>
             </section>
- 
+            
             <section data-state="dbs">
                 <div style="position: fixed;top: 50%;left: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);">
                     <svg id="db"></svg>
@@ -50,28 +52,212 @@
                 </div>
                 <div id="dbinfo" style="position: fixed; right: 0; top: 0;font-size:18px"></div>
             </section>
+    
+            <section>
+                <h4>Problems with protein interactions DBs</h4>
+                <br>
+                
+                <dl>
+                    <dt>Redundancy</dt>
+                    <dd>Same interaction is present in different DBs</dd>
+                    <dt>Diverse data sources</dt>
+                    <dd>How to integrate data form different resources?</dd>
+                    <dt>Quality assessment</dt>
+                    <dd>How can I assess interactions quality?</dd>
+                </dl>
+            </section>
         
-			<section>
-				<h4>Problems with protein interactions DBs</h4>
-                <ul>
-                    <li>Redundancy
-                        <ul>
-                            <li style="font-size:22px">Same interaction is present in different DBs</li>
-                        </ul>
-                    </li>
-                    <li>Diverse data sources
-                        <ul>
-                            <li style="font-size:22px">Which DBs should I use?</li>
-                            <li style="font-size:22px">How to integrate data form different resources?</li>
-                        </ul>
-                    </li>
-                    <li>Quality assessment
-                        <ul>
-                            <li style="font-size:22px">How can I assess the interaction quality ?</li>
-                        </ul>
-                    </li>
-                </ul>
+            <section>
+                <p class="fragment highlight-current-blue">Unified</p>
+                <p class="fragment highlight-current-blue">Non Redundant</p>
+                <p class="fragment highlight-current-blue">Quality Assessment</p>
+                <p class="fragment highlight-current-blue">Visualization</p>
 			</section>
+            
+            <section>
+                <h2>PSICQUIC</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Standard to access and retrieve data from Molecular Interaction databases</li>
+                            <li>DBs implementing PSICQUIC are listed in a registry</li>
+                            <li>Based on the PSI standard formats (PSI-MI XML and MITAB)</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6"><img src="img/psiquic.png"></div>
+                </div>
+            </section>
+            
+            <section>
+                <h2>PSICQUIC</h2>
+                <div class="row">
+                    <div class="col-md-6"><img src="img/psicquic2.png"></div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li>
+                                Interaction types
+                                <ul>
+                                    <li>Direct (physical)</li>
+                                    <li>Indirect (functional)</li>
+                                    <li>Prot2Prot</li>
+                                    <li>Prot2Chem</li>
+                                </ul>
+                            </li>
+                            <li>Based on the PSI standard formats (PSI-MI XML and MITAB)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <section>
+                <h2>Redundancy</h2>
+                <img src="img/venn.png" width="50%" height="50%">
+			</section>
+            
+            <section>
+                <h2>Merging Interactions</h2>
+                
+                <img width="70%" height="70%" src="img/merge.png">
+                 
+                <ul>
+                    <li>Merge binary interactions providing non redundant information</li>
+                    <li>Includes mapping information between the data provider and the original data</li>
+                </ul>
+            </section>
+            
+            <section data-background="img/numbers.jpg">
+                <h1>Scoring Interactions</h1>
+                 <p style="font-size:14px"><a href="https://www.flickr.com/photos/morebyless/" target="_blank">Image by morebyless Flickr</a></p>
+            </section>
+            
+            <section>
+                <h2>Current Scoring algorithms</h2>
+                <p>
+                    <ul>
+                        <li>Not reported in the scientific literature (except STRING)</li>
+                        <li>Depend on external data
+                            <ul>
+                                <li>Orthology detection</li>
+                                <li>‘Gold standard’ reference sets</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </p>
+            </section>
+            
+            <section>
+                <h2>Molecular Interactions score (MIscore)</h2>
+                
+                <img width="70%" height="70%" src="img/score.png">
+                
+                <ul>
+                    <li>Estimates how well studied an interaction is</li>
+                    <li>Applicable to all DBs implementing PSICQUIC</li>
+                    <li>Formula Based on curators experience</li>
+                </ul>
+            </section>
+        
+            <section>
+                <h2>Scores Comparison</h2>
+                <dl>
+                    <dt>Positive dataset:</dt>
+                    <dd>500 random human interactions reported by three or more detection methods in MENTHA</dd>
+                    <dt>Negative dataset:</dt>
+                    <dd>397 human interactions reported by the negatome database in MENTHA</dd>
+                </dl>
+            </section>
+        
+            <section>
+                <h2>Scores Comparison</h2>
+                <div class="col-md-6"><img src="img/scorefig.png"></div>
+                <div class="col-md-6">
+                    <br>
+                    <br>
+                    <ul>
+                        <li>Mentha higher precision</li>
+                        <li>MIscore recovers at the end</li>
+                        <li>Matthews correlation coefficient (MCC)
+                            <dl class="dl-horizontal">
+                                <dt>MIscore</dt>
+                                <dd>0.485</dd>
+                                <dt>Mentha</dt>
+                                <dd>0.343</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                
+            </section>
+                    
+            <section data-background="img/vis.jpg">
+                <div class="row">
+                  <div class="col-md-8"><h1>Visualization</h1></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8"><small><a href="https://www.flickr.com/photos/thevisualagency/" target="_blank">Image by thevisualagency Flickr</a></small></div>
+                </div>
+            </section>
+        
+            <section data-state="viz">
+                <div style="position: fixed;top: 50%;left: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);">
+                    <svg id="viz"></svg>
+                </div>
+                <div style="visibility: hidden">
+                    <p style="visibility: hidden" class="fragment">1</p>
+                    <p style="visibility: hidden" class="fragment">2</p>
+                </div>
+            </section>
+        
+            <section>
+                <h2>BioJS</h2>
+                
+                <div class="row">
+                    <div class="col-md-6"><img src="img/legos.png"></div>
+                    <div class="col-md-6">
+                        <blockquote>
+                            “BioJS is a library of components that are easy to reuse, maintain and deploy on the web” BioJS Specification, 2011-12-13
+				        </blockquote>
+                    </div>
+                </div>
+            </section>
+            
+            <section>
+                <h2>BioJS</h2>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Open community (social coding)</li>
+                            <li>Open Source</li>
+                            <li>Web Based</li>
+                            <li>Focused on visualization</li>
+                            <li><a href="http://www.biojs.net">BIOJS.NET</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6"><img src="img/opensource.svg.png"></div>
+                </div>
+            </section>
+            
+            <section>
+                <h2>BioJS</h2>
+                <img src="img/widgets.png">
+            </section>
+            
+            <section  data-background="img/graph.png">
+                <h2>Live Demo</h2>
+            </section>
+        
+            <section>
+                <p class="fragment grow">grow</p>
+                <p class="fragment shrink">shrink</p>
+                <p class="fragment roll-in">roll-in</p>
+                <p class="fragment fade-out">fade-out</p>
+                <p class="fragment current-visible">visible only once</p>
+                <p class="fragment highlight-current-blue">blue only once</p>
+                <p class="fragment highlight-red">highlight-red</p>
+                <p class="fragment highlight-green">highlight-green</p>
+                <p class="fragment highlight-blue">highlight-blue</p>
+            </section>
             
         
             <section>

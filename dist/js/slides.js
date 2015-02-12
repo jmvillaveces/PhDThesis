@@ -6,6 +6,17 @@ var height = document.body.clientHeight;
 var width = document.body.clientWidth;
 
 var data = {};
+data.donut = [{ name:'Unified', value:25 },{ name:'Non Redundant', value:25 },{ name:'Quality Assessment', value:25 },{ name:'Visualization', value:25 }];
+
+var viz = require('./js/viz.js');
+
+// Init date 
+var dateObj = new Date();
+var month = dateObj.getUTCMonth() + 1; //months from 1-12
+var day = dateObj.getUTCDate();
+var year = dateObj.getUTCFullYear();
+
+d3.selectAll('#date').html('<span class="blue">'+day + '</span> / <span class="blue">' + month + '</span> / <span class="blue">' + year +'</span>');
 
 d3.xml('https://cors-anywhere.herokuapp.com/http://www.ebi.ac.uk/Tools/webservices/psicquic/registry/registry?action=STATUS&format=xml', function(xml) {
     var intcount = 0, servers = [];
@@ -25,12 +36,40 @@ d3.xml('https://cors-anywhere.herokuapp.com/http://www.ebi.ac.uk/Tools/webservic
 
 Reveal.addEventListener( 'dbs', function() {
     require('./js/dbs.js')(data.psi, width, height, d3);
-}, false );
+}, false);
 
 Reveal.addEventListener( 'viz', function() {
-    require('./js/viz.js')(['A','B','C','D','E','F','G','H','I','J','K','L','M','N'], width, height, d3);
-}, false );
-},{"./js/dbs.js":2,"./js/viz.js":3,"d3":4}],2:[function(require,module,exports){
+    viz.init(['A','B','C','D','E','F','G','H','I','J','K','L','M','N'], 500, 500, d3);
+}, false);
+
+Reveal.addEventListener( 'fragmentshown', function( event ) {
+    var val = d3.select(event.fragment).text();
+    
+    if(val === '1'){
+        viz.bkg(40);
+    }else if(val === '2'){
+        viz.bkg(0);
+        viz.sort();
+        viz.bar();
+    }
+});
+
+Reveal.addEventListener( 'fragmenthidden', function( event ) {
+    var val = d3.select(event.fragment).text();
+    
+    if(val === '1'){
+        viz.bkg(0);
+    }else if(val === '2'){
+        viz.sort('randPos');
+        viz.bkg(40);
+        viz.bar(0);
+    }
+});
+
+Reveal.addEventListener( 'pie', function() {
+    require('./js/pie.js').init(data.psi.servers, width, height, d3);
+}, false);
+},{"./js/dbs.js":2,"./js/pie.js":3,"./js/viz.js":4,"d3":5}],2:[function(require,module,exports){
 var db = function(data, width, height, d3){
     
     var numeral = require('numeral');
@@ -113,45 +152,176 @@ var db = function(data, width, height, d3){
     info.html('<p><span class="blue">'+data.servers.length+'</span> Databases</p><p><span class="blue">'+numeral(data.count).format('0,0')+'</span> Interactions</p>');
 };
 module.exports = db;
-},{"numeral":5}],3:[function(require,module,exports){
-var viz = function(data, width, height, d3){
+},{"numeral":6}],3:[function(require,module,exports){
+//public stuff
+var pie = {};
+var color = d3.scale.category20();
+
+pie.init = function(data, width, height, d3){
+    var radius = Math.min(width, height) / 2;
     
-     var numeral = require('numeral');
+    var arc = d3.svg.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(0);
+
+    var pie = d3.layout.pie()
+        .sort(null)
+        .value(function(d) { return d.count; });
     
-    // Returns a random number between min (inclusive) and max (exclusive)
-    function randBtw(min, max) {
-        return Math.random() * (max - min) + min;
-    }
+    var svg = d3.select('#pie')
+        .attr('width', width)
+        .attr('height', height)
+        .append('g')
+            .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
     
+    var g = svg.selectAll('.arc')
+        .data(pie(data))
+        .enter().append('g')
+        .attr('class', 'arc');
+    
+    g.append('path')
+        .attr('d', arc)
+        .style('fill', function(d) { return color(d.data.name); });
+
+    g.append('text')
+        .attr('transform', function(d) { return 'translate(' + arc.centroid(d) + ')'; })
+        .attr('dy', '.35em')
+        .style('text-anchor', 'middle')
+        .text(function(d) { return d.data.name; });
+};
+
+module.exports = pie;
+},{}],4:[function(require,module,exports){
+var numeral = require('numeral');
+var svg, g;
+
+// Returns a random number between min (inclusive) and max (exclusive)
+function randBtw(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+var colorscale = d3.scale.linear().range(['#1b91ff', '#ff2c2d']);
+var wscale = d3.scale.linear().range([0,100]);
+var oscale = d3.scale.linear().range([0.3,1]);
+
+//public stuff
+var viz = {};
+
+viz.init = function(data, width, height, d3){
     var dat = [];
     for(var i=0; i<data.length; i++)
-        dat.push({name : data[i], value : randBtw(-1,1)});
+        dat.push({name : data[i], value : randBtw(-1,1), randPos: i});
     
-    console.log(dat);
+    //Sort desc
+    dat.sort(function(x,y){
+        return y.value - x.value;
+    });
     
-    var svg = d3.select('#viz')
+    var max = d3.max(dat, function(d){
+        return Math.abs(d.value);
+    });
+    
+    colorscale.domain([dat[0].value, dat[dat.length-1].value]);
+    wscale.domain([0, max]);
+    oscale.domain([0, max]);
+    
+    svg = d3.select('#viz')
         .attr('width', width)
         .attr('height', height);
     
-    var g = svg.selectAll('g')
+    g = svg.selectAll('g')
         .data(dat)   
         .enter().append('g')
-          .attr('transform', function(d, i) { return 'translate(' + 50 + ',' + (i+1)*30 + ')'; });
+          .attr('transform', function(d) { return 'translate(' + 50 + ',' + (d.randPos+2)*30 + ')'; });
     
     g.append('text')
-        .style('font-size','14px')
+        .style('font-size','18px')
         .text(function(d) { return d.name; });
     
+    //background
+     g.append('rect')
+        .attr('y',-15)
+        .attr('x',100)
+        .attr('class', 'bkg')
+        .attr('width', 0)
+        .attr('height', 20)
+        .attr('fill', function(d){
+            return d.value <=0 ? '#ff2c2d' : '#17ff2e';
+        });
+    
     g.append('text')
-        .attr('x',50)
-        .style('font-size','14px')
+        .attr('x',120)
+        .attr('class', '.val')
+        .style('font-size','18px')
         .text(function(d) { return numeral(d.value).format('0.00'); });
     
+    //bar
+     g.append('rect')
+        .attr('y',-17)
+        .attr('x', 140)
+        .attr('class', 'bar')
+        .attr('width', 0)
+        .attr('height', 20)
+        .attr('fill', function(d){
+            return colorscale(d.value);
+        })
+        .attr('fill-opacity', function(d){
+            return oscale(Math.abs(d.value));
+        });
     
+    //titles
+    var titles = svg.append('g')
+        .attr('transform', function(d) { return 'translate(' + 50 + ',' + 30 + ')'; });
     
+    titles.append('text')
+        .style('font-size','18px')
+        .text('Gene Name');
+    
+    titles.append('text')
+        .style('font-size','18px')
+        .attr('x',120)
+        .text('Expression');
+    
+    titles.append('line')
+        .attr('x1',60)
+        .attr('y1',-20)
+        .attr('x2',60)
+        .attr('y2',width)
+        .attr('stroke', 'gray') 
+        .attr('stroke-width', 2);
+    
+    titles.append('line')
+        .attr('x1',-51)
+        .attr('y1',5)
+        .attr('x2',200)
+        .attr('y2',5)
+        .attr('stroke', 'gray') 
+        .attr('stroke-width', 2);
+        
+};
+
+viz.bkg = function(w){
+    svg.selectAll('.bkg').attr('width', w);
+};
+    
+viz.sort = function(){
+    var tmp = arguments.length ? arguments[0] : null;
+    g.transition().attr('transform', function(d,i) { 
+        var val = tmp !== null ? d[tmp] : i;
+        return 'translate(' + 50 + ',' + (val+2)*30 + ')';
+    });
+};
+
+viz.bar = function(){
+    
+    var tmp = arguments.length ? arguments[0] : null;
+    svg.selectAll('.bar').transition().attr('width', function(d){
+        var val = tmp !== null ? tmp : wscale(Math.abs(d.value));
+        return val;
+    });
 };
 module.exports = viz;
-},{"numeral":5}],4:[function(require,module,exports){
+},{"numeral":6}],5:[function(require,module,exports){
 !function() {
   var d3 = {
     version: "3.5.3"
@@ -9618,7 +9788,7 @@ module.exports = viz;
   if (typeof define === "function" && define.amd) define(d3); else if (typeof module === "object" && module.exports) module.exports = d3;
   this.d3 = d3;
 }();
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /*!
  * numeral.js
  * version : 1.5.3
