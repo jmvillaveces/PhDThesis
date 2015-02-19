@@ -149,7 +149,7 @@ var db = function(data, width, height, d3){
     
     //par
     var info = d3.select('#dbinfo').style('font-size','18px');
-    info.html('<p><span class="blue">'+data.servers.length+'</span> Databases</p><p><span class="blue">'+numeral(data.count).format('0,0')+'</span> Interactions</p>');
+    info.html('<p><span class="blue">'+data.servers.length+'</span> Databases</p><p><span class="blue"> > '+numeral(/*data.count*/30000000).format('0,0')+'</span> Interactions</p>');
 };
 module.exports = db;
 },{"numeral":6}],3:[function(require,module,exports){
