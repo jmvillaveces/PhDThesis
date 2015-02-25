@@ -69,6 +69,7 @@ Reveal.addEventListener( 'fragmenthidden', function( event ) {
 Reveal.addEventListener( 'pie', function() {
     require('./js/pie.js').init(data.psi.servers, width, height, d3);
 }, false);
+
 },{"./js/dbs.js":2,"./js/pie.js":3,"./js/viz.js":4,"d3":5}],2:[function(require,module,exports){
 var db = function(data, width, height, d3){
     
