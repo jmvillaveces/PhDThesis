@@ -68,10 +68,20 @@
             </section>
         
             <section>
-                <p class="fragment highlight-current-blue">Unified</p>
-                <p class="fragment highlight-current-blue">Non Redundant</p>
-                <p class="fragment highlight-current-blue">Quality Assessment</p>
-                <p class="fragment highlight-current-blue">Visualization</p>
+                <div class="row">
+                    <div class="col-md-8">
+                        <dl class="dl-horizontal">
+                            <dt>1</dt>
+                            <dd>Unified</dd>
+                            <dt>2</dt>
+                            <dd>Non Redundant</dd>
+                            <dt>3</dt>
+                            <dd>Quality Assessment</dd>
+                            <dt>4</dt>
+                            <dd>Visualization</dd>
+                        </dl>
+                    </div>
+                </div>
 			</section>
             
             <section data-background="img/puzzle.jpg">
@@ -105,11 +115,12 @@
             </section>
             
             <section>
-                <h2>PSICQUIC</h2>
+                <h2>Fetching interactions</h2>
                 <div class="row">
                     <div class="col-md-6"><img src="img/psicquic2.png"></div>
                     <div class="col-md-6">
                         <ul>
+                            <li>31 different databases (<span class="blue">~150 million</span> interactions)</li>
                             <li>
                                 Interaction types
                                 <ul>
@@ -119,7 +130,7 @@
                                     <li>Prot2Chem</li>
                                 </ul>
                             </li>
-                            <li>Based on the PSI standard formats (PSI-MI XML and MITAB)</li>
+                            <li>Automated process that detects changes in DB</li>
                         </ul>
                     </div>
                 </div>
@@ -166,6 +177,10 @@
                     <li>Applicable to all DBs implementing PSICQUIC</li>
                     <li>Formula Based on curators experience</li>
                 </ul>
+                <br>
+                <div class="row">
+                    <div style="allign:center; font-size:12px" class="col-md-12">Villaveces JM, et all. Merging and scoring molecular interactions utilising existing community standards: tools, use-cases and a case study Database 2015 (doi: 10.1093/database/bau131)</div>
+                </div>
             </section>
         
             <section>
@@ -197,7 +212,14 @@
                         </li>
                     </ul>
                 </div>
-                
+            </section>
+        
+            <section>
+                <h2>Status</h2>
+                <p><span class="blue">1’764,857</span> different  molecules (proteins, chemicals).</p>
+                <p><span class="blue">23’912,268</span> different interactions.</p>
+                <p><span class="blue">2,665</span> organisms.</p>
+                <p><span class="blue">25</span> databases</p>
             </section>
                     
             <section data-background="img/vis.jpg">
@@ -226,7 +248,7 @@
                     <div class="col-md-6"><img src="img/legos.png"></div>
                     <div class="col-md-6">
                         <blockquote>
-                            “BioJS is a library of components that are easy to reuse, maintain and deploy on the web” BioJS Specification, 2011-12-13
+                            “BioJS is a library of components that are easy to reuse, maintain and deploy on the web” BioJS Specification, 2011-12-13.
 				        </blockquote>
                     </div>
                 </div>
@@ -254,12 +276,37 @@
                 <img src="img/widgets.png">
             </section>
         
-             <section>
-                <h2>Components</h2>
+            <section>
+                <h2>PsicquicGraph</h2>
                 <div class="row">
-                    <div class="col-md-4"><img src="img/pview.png"></div>
-                    <div class="col-md-4"><img src="img/proteome.png"></div>
-                    <div class="col-md-4"><img src="img/kegg.png"></div>
+                    <div class="col-md-6"><br><br>An open-source, web-based visualization component for molecular interactions from PSIQUIC services.</div>
+                    <div class="col-md-6"><img src="img/pview.png"></div>
+                </div>
+                <div class="row">
+                    <div style="allign:center; font-size:12px" class="col-md-12">Villaveces JM, Jimenez RC and Habermann BH. PsicquicGraph, a BioJS component to visualize molecular interactions from PSICQUIC servers [v1; ref status: indexed, http://f1000r.es/2up] F1000Research 2014, 3:44 (doi: 10.12688/f1000research.3-44.v1)</div>
+                </div>
+            </section>
+        
+            <section>
+                <h2>KeggViewer</h2>
+                <div class="row">
+                    <div class="col-md-6"><img src="img/kegg.png"></div>
+                    <div class="col-md-6"><br>A component to visualize KEGG pathways and to allow their visual integration with functional data.</div>
+                </div>
+                <br>
+                <div class="row">
+                    <div style="allign:center; font-size:12px" class="col-md-12">Villaveces JM, Jimenez RC and Habermann BH. KEGGViewer, a BioJS component to visualize KEGG Pathways [v1; ref status: indexed, http://f1000r.es/2uq] F1000Research 2014, 3:43 (doi: 10.12688/f1000research.3-43.v1)</div>
+                </div>
+            </section>
+        
+            <section>
+                <h2>ProteomeViewer</h2>
+                <div class="row">
+                    <div class="col-md-6"><br><br>A component to explore UniProt proteomes</div>
+                    <div class="col-md-6"><img src="img/proteome.png"></div>
+                </div>
+                <div class="row">
+                    <div style="allign:center" class="col-md-8"><img style="border:0px;" src="img/gsoc.jpeg"></div>
                 </div>
             </section>
             
