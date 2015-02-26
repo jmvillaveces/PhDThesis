@@ -69,6 +69,7 @@ Reveal.addEventListener( 'fragmenthidden', function( event ) {
 Reveal.addEventListener( 'pie', function() {
     require('./js/pie.js').init(data.psi.servers, width, height, d3);
 }, false);
+
 },{"./js/dbs.js":2,"./js/pie.js":3,"./js/viz.js":4,"d3":5}],2:[function(require,module,exports){
 var db = function(data, width, height, d3){
     
@@ -149,7 +150,7 @@ var db = function(data, width, height, d3){
     
     //par
     var info = d3.select('#dbinfo').style('font-size','18px');
-    info.html('<p><span class="blue">'+data.servers.length+'</span> Databases</p><p><span class="blue">'+numeral(data.count).format('0,0')+'</span> Interactions</p>');
+    info.html('<p><span class="blue">'+data.servers.length+'</span> Databases</p><p><span class="blue"> > '+numeral(/*data.count*/30000000).format('0,0')+'</span> Interactions</p>');
 };
 module.exports = db;
 },{"numeral":6}],3:[function(require,module,exports){
