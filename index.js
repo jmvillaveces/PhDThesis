@@ -68,3 +68,40 @@ Reveal.addEventListener( 'fragmenthidden', function( event ) {
 Reveal.addEventListener( 'pie', function() {
     require('./js/pie.js').init(data.psi.servers, width, height, d3);
 }, false);
+
+Reveal.addEventListener( 'part', function() {
+    
+        var i = 0;
+        
+        var width = Math.max(960, innerWidth),
+        height = Math.max(500, innerHeight);
+        
+        
+        var svg = d3.select("#particles").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+        
+        
+        function particle() {
+          svg.insert("circle", "rect")
+              .attr("cx", Math.floor(Math.random() * width))
+              .attr("cy", Math.floor(Math.random() * height))
+              .attr("r", 1e-6)
+              .attr("fill-opacity", 0)
+              .style("stroke", d3.hsl((i = (i + 1) % 360), 1, 0.5))
+              .style("stroke-opacity", 1)
+              .style("stroke-width", 5)
+            .transition()
+              .duration(2000)
+              .ease(Math.sqrt)
+              .attr("r", 100)
+              .style("stroke-opacity", 1e-6)
+              .remove();
+        }
+        
+        window.setInterval(particle, 600);
+    
+    
+}, false);
+
+
