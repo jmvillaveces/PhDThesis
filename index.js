@@ -103,5 +103,3 @@ Reveal.addEventListener( 'part', function() {
     
     
 }, false);
-
-
